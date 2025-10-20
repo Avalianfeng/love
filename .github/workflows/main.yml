@@ -28,7 +28,7 @@ jobs:
       run: pyinstaller --onefile --windowed --name="Love应用" heart.py
         
     - name: 上传Mac应用
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: mac-love-app
         path: dist/Love应用.app
