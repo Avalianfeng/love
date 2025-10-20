@@ -1,0 +1,34 @@
+name: 打包Mac爱应用
+on: 
+  push:
+    branches: [ main ]
+  workflow_dispatch:  # 允许手动触发
+
+jobs:
+  build-mac:
+    runs-on: macos-latest
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: 设置Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.11'
+        
+    - name: 安装PyInstaller
+      run: pip install pyinstaller
+      
+    - name: 安装依赖（如果有）
+      run: |
+        if [ -f requirements.txt ]; then
+          pip install -r requirements.txt
+        fi
+        
+    - name: 打包Mac应用
+      run: pyinstaller --onefile --windowed --name="Love应用" heart.py
+        
+    - name: 上传Mac应用
+      uses: actions/upload-artifact@v3
+      with:
+        name: mac-love-app
+        path: dist/Love应用.app
